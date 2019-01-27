@@ -57,6 +57,7 @@ function createButton(x, y, height, width){
 
 function createUrinal(dx,dy){
     return {
+        clickable: true,
         occupied:false,
         x:dx,
         y:dy,
@@ -64,21 +65,23 @@ function createUrinal(dx,dy){
         width: 68,
         button:createButton(dx,dy,125,68),
         draw: function(){
-            if(click!=null){
-                if(this.button.intersects(click)){
+            if(this.clickable){
+                if(click!=null){
+                    if(this.button.intersects(click)){
                     //this.occupied=!this.occupied;
                     this.occupied = true;
                     turn = !turn;
                     click = null;
                 }
             }
-            ctx.drawImage(urinalimg,236,0,408,750,dx,dy,68,125);
-            if(this.occupied){
-                ctx.drawImage(taken, dx, dy, 68,136);
-            }
-
         }
+        ctx.drawImage(urinalimg,236,0,408,750,dx,dy,68,125);
+        if(this.occupied){
+            ctx.drawImage(taken, dx, dy, 68,136);
+        }
+
     }
+}
 }
 
 
@@ -94,15 +97,25 @@ function game() {
     bathroom.draw();
     ctx.textAlign = 'start';
     ctx.font = '30px Trebuchet-MS';
-if(turn){
-    ctx.fillText('p1 -> p2', 20, 20);
-} else {
-    ctx.fillText('p1 <- p2', 20 ,20);
-}
+    if(turn){
+        ctx.fillText('p1 <- p2', 20, 20);
+    } else {
+        ctx.fillText('p1 -> p2', 20 ,20);
+    }
     if(isGay()){
 
         ctx.font = '20px Sans-Serif'
         ctx.fillText('hold up buddy, thats gay', 195,500);
+        var u;
+        for(u = 0; u<bathroom.urinals.length; u++){
+            bathroom.urinals[u].clickable = false;
+        }
+        if(turn){
+        ctx.fillText('Game over! P1 wins!', 195, 540);
+
+    } else {
+        ctx.fillText('Game over! P2 wins!', 195, 540);
+    }
     }
 }
 
