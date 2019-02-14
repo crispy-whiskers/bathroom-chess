@@ -19,7 +19,7 @@ var reset = createButton(694, 69, 80, 200);
 var next =Math.floor(Math.random()*6+1);
 //game vars
 
-var num;
+
 var bathroom = {
     times:[],
     urinals:[],
@@ -33,15 +33,14 @@ var bathroom = {
 }
 //create urinals
 
-for(num = 0; num<numurinal; num++){
+for(let num = 0; num<numurinal; num++){
     bathroom.urinals.push(createUrinal((num*70+20), 200, num));
     bathroom.times.push(0);
 
 }
 function isGay(){
-    var gay;
-    var k;
-    for(k=0;k<bathroom.urinals.length-1;k++){
+    var gay; //made this var wayy back, but i kinda dont wanna delete it lol
+    for(let k=0;k<bathroom.urinals.length-1;k++){
         if(bathroom.urinals[k].occupied==true && bathroom.urinals[k+1].occupied==true)
             return true;
     }
@@ -108,13 +107,12 @@ function resetGame() {
         times:[],
         urinals:[],
         draw:function(){
-            var i;
-            for(i=0; i<this.urinals.length; i++){
+            for(let i=0; i<this.urinals.length; i++){
                 this.urinals[i].draw();
             }
         }
     }
-    for(num = 0; num<numurinal; num++){
+    for(let num = 0; num<numurinal; num++){
         bathroom.urinals.push(createUrinal((num*70+20), 200));
         bathroom.times.push(0);
     }
@@ -131,7 +129,7 @@ function passTurn(){
     console.log("turn passed!");
     console.log(bathroom.times.join(" "));
     console.log(bathroom.urinals.join);
-    for(var x = 0; x<bathroom.urinals.length; x++){
+    for(let x = 0; x<bathroom.urinals.length; x++){
         if(!bathroom.times[x]>0){
             bathroom.times[x]=0;
             bathroom.urinals[x].occupied = false;
@@ -148,8 +146,8 @@ function passTurn(){
 function endgame() {
     ctx.font = '20px Sans-Serif'
     ctx.fillText('hold up buddy, thats gay', 195,500);
-    var u;
-    for(u = 0; u<bathroom.urinals.length; u++){
+    
+    for(let u = 0; u<bathroom.urinals.length; u++){
         bathroom.urinals[u].clickable = false;
     }
     if(turn){
