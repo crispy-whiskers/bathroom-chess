@@ -4,7 +4,7 @@ var click = null;
 //site mech vars
 //gay stright mechanics, drop the soap mechanics
 
-var numurinal = 10;
+var numurinal = 11;
 var urinalimg = new Image(); 
 urinalimg.src = 'resources/urinal.jpg';
 var taken = new Image();
@@ -16,6 +16,7 @@ var button = createButton(0,200,80,200); //main menu button
 button.x = canvas.width/2 - button.width/2;
 var turn = true;
 var reset = createButton(694, 69, 80, 200);
+
 var next =Math.floor(Math.random()*6+1);
 //game vars
 
@@ -103,18 +104,9 @@ function createUrinal(dx,dy, num){
 function resetGame() {
     console.log('Resetting!');
     turn = true;
-    bathroom = {
-        times:[],
-        urinals:[],
-        draw:function(){
-            for(let i=0; i<this.urinals.length; i++){
-                this.urinals[i].draw();
-            }
-        }
-    }
     for(let num = 0; num<numurinal; num++){
-        bathroom.urinals.push(createUrinal((num*70+20), 200));
-        bathroom.times.push(0);
+        bathroom.urinals[num] = createUrinal((num*70+20), 200, num);
+        bathroom.times[num]=0;
     }
     playing = false;
 }
@@ -156,12 +148,11 @@ function endgame() {
     } else {
         ctx.fillText('Game over! P2 wins!', 195, 540);
     }
-    /* NOT WORKING! TODO: FIX RESET BUG [UNDEFINED ARRAY]
     reset.draw();
     if(click!=null)
         if(reset.intersects(click))
             resetGame();
-    */
+    
 
     }
 
@@ -179,7 +170,7 @@ function endgame() {
         }
         if(isGay()){
             endgame();
-
+            
         }
     }
 
