@@ -11,9 +11,11 @@ var taken = new Image();
 taken.src = 'resources/stickfig.png';
 //resource vars
 
-var playing = false;
+var playing = 0;
 var button = createButton(0,200,80,200); //main menu button
+var instructions = createButton(0,325,80,300);
 button.x = canvas.width/2 - button.width/2;
+instructions.x = canvas.width/2 - instructions.width/2;
 var turn = true;
 var reset = createButton(694, 69, 80, 200);
 
@@ -108,7 +110,7 @@ function resetGame() {
         bathroom.urinals[num] = createUrinal((num*70+20), 200, num);
         bathroom.times[num]=0;
     }
-    playing = false;
+    playing = 0;
 }
 
 
@@ -160,7 +162,7 @@ function endgame() {
         bathroom.draw();
         ctx.textAlign = 'start';
         ctx.font = '15px Trebuchet-MS';
-        ctx.fillText('The next person will stay for '+next+' rounds', 700, 500);
+        ctx.fillText('The next person will stay for '+next+' rounds', 700, 490);
         ctx.font = '30px Trebuchet-MS';
 
         if(turn){
@@ -173,6 +175,9 @@ function endgame() {
             
         }
     }
+    function instructions(){
+
+    }
 
     function main_menu() {
 
@@ -183,15 +188,20 @@ function endgame() {
         ctx.fillText("Bathroom Chess", 500,100);
         ctx.fillStyle = "#FF0000";
 
+        
         if(click != null){
             if(button.intersects(click)) {
-                playing = true;
                 ctx.fillStyle = "#FFFFFF";
                 click=null;
+                playing = 1;
+            /*} else if(instructions.intersects(click)){
+                playing = 2; */
             }
         }
 
         button.draw();
+        //instructions.draw();
+
         ctx.fillStyle = "#000000";
         ctx.fillText('PLAY', 500,button.y+60);
 
@@ -199,8 +209,11 @@ function endgame() {
 
 
     function process(){
-        if(playing){
+        if(playing == 1){
             game();
+
+        }else if(playing==2){
+            instructions();
         } else {
             main_menu();
         }
